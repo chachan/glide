@@ -566,35 +566,40 @@ var EventsBus = function () {
 }();
 
 var Glide = function () {
-  /**
-   * Construct glide.
-   *
-   * @param  {String} selector
-   * @param  {Object} options
-   */
-  function Glide(selector) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  function Glide() {
     classCallCheck(this, Glide);
-
-    this._c = {};
-    this._t = [];
-    this._e = new EventsBus();
-
-    this.disabled = false;
-    this.selector = selector;
-    this.settings = mergeOptions(defaults, options);
-    this.index = this.settings.startAt;
   }
 
-  /**
-   * Initializes glide.
-   *
-   * @param {Object} extensions Collection of extensions to initialize.
-   * @return {Glide}
-   */
-
-
   createClass(Glide, [{
+    key: 'init',
+
+    /**
+     * Construct glide instance without a formal constructor.
+     *
+     * @param  {String} selector
+     * @param  {Object} options
+     */
+    value: function init(selector) {
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      this._c = {};
+      this._t = [];
+      this._e = new EventsBus();
+
+      this.disabled = false;
+      this.selector = selector;
+      this.settings = mergeOptions(defaults, options);
+      this.index = this.settings.startAt;
+    }
+
+    /**
+     * Initializes glide.
+     *
+     * @param {Object} extensions Collection of extensions to initialize.
+     * @return {Glide}
+     */
+
+  }, {
     key: 'mount',
     value: function mount$$1() {
       var extensions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -958,19 +963,25 @@ function Run (Glide, Components, Events) {
       // While direction is `=` we want jump to
       // a specified index described in steps.
       if (direction === '=') {
-        return Glide.index = steps;
+        Glide.index = steps;
+
+        return;
       }
 
       // When pattern is equal to `>>` we want
       // fast forward to the last slide.
       if (direction === '>' && steps === '>') {
-        return Glide.index = length;
+        Glide.index = length;
+
+        return;
       }
 
       // When pattern is equal to `<<` we want
       // fast forward to the first slide.
       if (direction === '<' && steps === '<') {
-        return Glide.index = 0;
+        Glide.index = 0;
+
+        return;
       }
 
       // While steps is a numeric value and we
@@ -997,7 +1008,9 @@ function Run (Glide, Components, Events) {
           this._o = true;
         }
 
-        return Glide.index = normalizeForwardIndex(index, viewSize);
+        Glide.index = normalizeForwardIndex(index, viewSize);
+
+        return;
       }
 
       // we are moving backward
@@ -1008,7 +1021,9 @@ function Run (Glide, Components, Events) {
           this._o = true;
         }
 
-        return Glide.index = normalizeBackwardIndex(_index, viewSize);
+        Glide.index = normalizeBackwardIndex(_index, viewSize);
+
+        return;
       }
 
       warn('Invalid direction pattern [' + direction + steps + '] has been used');

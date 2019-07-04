@@ -8,12 +8,12 @@ import EventsBus from './core/event/events-bus'
 
 export default class Glide {
   /**
-   * Construct glide.
+   * Construct glide instance without a formal constructor.
    *
    * @param  {String} selector
    * @param  {Object} options
    */
-  constructor (selector, options = {}) {
+  init (selector, options = {}) {
     this._c = {}
     this._t = []
     this._e = new EventsBus()
